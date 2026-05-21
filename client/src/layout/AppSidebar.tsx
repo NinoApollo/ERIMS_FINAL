@@ -82,7 +82,7 @@ const AppSidebar = () => {
                   RECYCLING HUB
                 </p>
                 <p className="text-sm font-bold text-emerald-800">
-                  Admin Panel
+                  Admin Dashboard
                 </p>
               </div>
             </div>

@@ -35,14 +35,14 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
 }) => {
   return (
     <>
-      <div className="relative group">
+      <div className="relative group ml-4">
         <input
           type={type}
           id={name}
           name={name}
           value={value}
           onChange={onChange}
-          className={`${newInputClassName ? newInputClassName : `block px-2.5 pb-2.5 pt-4 w-lg text-sm text-gray-800 bg-linear-to-br from-emerald-700 via-emerald-600 to-teal-700backdrop-blur-sm rounded-xl border-2 transition-all duration-200 appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 hover:border-emerald-300 peer ${inputClassName}`}`}
+          className={`${newInputClassName ? newInputClassName : `block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-800 bg-linear-to-br from-emerald-700 via-emerald-600 to-teal-700backdrop-blur-sm rounded-xl border-2 transition-all duration-200 appearance-none focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-emerald-400 hover:border-emerald-300 peer ${inputClassName}`}`}
           placeholder=" "
           required={required}
           autoFocus={autoFocus}
