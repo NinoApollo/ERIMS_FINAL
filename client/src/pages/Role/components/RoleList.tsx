@@ -94,7 +94,7 @@ const RoleList = () => {
       <div className="overflow-hidden rounded-lg border border-emerald-100 bg-white">
         <div className="max-w-full max-h-[calc(100vh)] overflow-auto">
           <Table>
-            <TableHeader className="border-b border-emerald-100 bg-gradient-to-r from-emerald-600 to-emerald-700 sticky top-0 text-white text-xs">
+            <TableHeader className="border-b border-emerald-100 bg-linear-to-r from-emerald-600 to-emerald-700 sticky top-0 text-white text-xs">
               <TableRow>
                 <TableCell
                   isHeader

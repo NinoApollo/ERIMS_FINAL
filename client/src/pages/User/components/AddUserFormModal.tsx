@@ -86,6 +86,7 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({ isOpen, onClose }) => {
                   label="Birth Date"
                   type="date"
                   name="birth_date"
+                  inputClassName="text-white"
                   required
                 />
               </div>

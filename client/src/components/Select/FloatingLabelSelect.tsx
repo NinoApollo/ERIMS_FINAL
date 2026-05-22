@@ -50,7 +50,7 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
         disabled={disabled}
         className={`
           w-full px-4 pb-2.5 pt-5 
-          text-sm text-gray-800 
+          text-sm text-emerald-900 
           ${bgColor} rounded-xl 
           border-2 transition-all duration-200 
           appearance-none cursor-pointer
@@ -78,7 +78,7 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
           peer-focus:scale-75 
           peer-focus:-translate-y-3
           ${labelColor}
-          ${disabled && "text-gray-400"}
+          ${disabled && "text-emerald-300"}
           ${newLabelClassName || labelClassName || ""}
         `}
       >

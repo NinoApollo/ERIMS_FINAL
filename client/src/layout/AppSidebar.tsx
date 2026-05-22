@@ -7,8 +7,8 @@ const AppSidebar = () => {
 
   const sidebarItems = [
     {
-      path: "#",
-      text: "📊 DASHBOARD",
+      path: "/",
+      text: "DASHBOARD",
       icon: (
         <svg
           className="w-5 h-5"
@@ -26,8 +26,8 @@ const AppSidebar = () => {
       ),
     },
     {
-      path: "#",
-      text: "👥 USER MANAGEMENT",
+      path: "/users",
+      text: "USER MANAGEMENT",
       icon: (
         <svg
           className="w-5 h-5"
@@ -62,26 +62,16 @@ const AppSidebar = () => {
         <div className="h-full px-4 py-6 overflow-y-auto bg-white/95 backdrop-blur-md border-r border-emerald-100">
           <div className="mb-8 px-3">
             <div className="flex items-center gap-2 mb-6 pb-4 border-b border-emerald-100">
-              <div className="w-10 h-10 bg-linear-to-br from-emerald-500 to-emerald-700 rounded-xl flex items-center justify-center shadow-md">
-                <svg
-                  className="w-6 h-6 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
-                </svg>
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center shadow-md">
+                <div className="w-8 h-8 text-2xl rounded-lg flex items-center justify-center">
+                  ♻️
+                </div>
               </div>
               <div>
-                <p className="text-xs text-emerald-500 font-semibold">
+                {/* <p className="text-xs text-emerald-500 font-semibold">
                   RECYCLING HUB
-                </p>
-                <p className="text-sm font-bold text-emerald-800">
+                </p> */}
+                <p className="text-lg font-bold text-emerald-800">
                   Admin Dashboard
                 </p>
               </div>
