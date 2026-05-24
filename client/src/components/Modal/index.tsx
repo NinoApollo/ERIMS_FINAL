@@ -56,7 +56,7 @@ const Modal: FC<ModalProps> = ({
 
   return (
     <>
-      <div className="fixed inset-0 z-[9999] flex items-center justify-center overflow-y-auto bg-black/20 backdrop-blur-sm p-4">
+      <div className="fixed inset-0 z-9999 flex items-center justify-center overflow-y-auto bg-black/20 backdrop-blur-sm p-4">
         {isFullScreen && (
           <div className="fixed inset-0 w-full h-full bg-emerald-900/15 backdrop-blur-sm" />
         )}

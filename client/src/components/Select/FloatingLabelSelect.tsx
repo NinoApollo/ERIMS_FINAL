@@ -39,16 +39,16 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
   const bgColor = "bg-white";
 
   return (
-    <div className="relative w-full">
-      <select
-        name={name}
-        id={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        autoFocus={autoFocus}
-        disabled={disabled}
-        className={`
+    <>
+      <div className="relative w-full">
+        <select
+          name={name}
+          id={name}
+          value={value}
+          onChange={onChange}
+          autoFocus={autoFocus}
+          disabled={disabled}
+          className={`
           w-full px-4 pb-2.5 pt-5 
           text-sm text-emerald-900 
           ${bgColor} rounded-xl 
@@ -59,13 +59,13 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
           ${disabled && "bg-emerald-50 opacity-60 cursor-not-allowed"}
           ${newSelectClassName || selectClassName || ""}
         `}
-      >
-        {children}
-      </select>
+        >
+          {children}
+        </select>
 
-      <label
-        htmlFor={name}
-        className={`
+        <label
+          htmlFor={name}
+          className={`
           absolute text-sm duration-300 transform 
           -translate-y-3 scale-75 top-2 z-10 
           origin-left left-3 px-1 
@@ -81,32 +81,32 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
           ${disabled && "text-emerald-300"}
           ${newLabelClassName || labelClassName || ""}
         `}
-      >
-        {label}
-        {required && <span className="text-rose-400 ml-0.5">*</span>}
-      </label>
-
-      {/* Dropdown arrow icon */}
-      <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-        <svg
-          className={`w-4 h-4 transition-transform ${hasError ? "text-rose-400" : "text-emerald-400"}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth="2"
-            d="M19 9l-7 7-7-7"
-          />
-        </svg>
-      </div>
+          {label}
+          {required && <span className="text-rose-400 ml-0.5">*</span>}
+        </label>
 
-      {hasError && (
-        <p className="text-rose-500 text-xs mt-1 ml-1">{errors[0]}</p>
+        {/* Dropdown arrow icon */}
+        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+          <svg
+            className={`w-4 h-4 transition-transform ${hasError ? "text-rose-400" : "text-emerald-400"}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+      {errors && errors.length > 0 && (
+        <span className="text-rose-500 text-xs mt-1 ml-1"> {errors[0]} </span>
       )}
-    </div>
+    </>
   );
 };
 
