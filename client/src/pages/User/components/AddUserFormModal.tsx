@@ -4,21 +4,23 @@ import Modal from "../../../components/Modal";
 import FloatingLabelSelect from "../../../components/Select/FloatingLabelSelect";
 import SubmitButton from "../../../components/Button/SubmitButton";
 import CloseButton from "../../../components/Button/CloseButton";
-import type { RoleColumns } from "../../../interfaces/RoleColumns";
 import RoleService from "../../../services/RoleService";
-import type { UserFieldErrors } from "../../../interfaces/UserFieldErrors";
 import UserService from "../../../services/UserService";
+import type { RoleColumns } from "../../../interfaces/RoleInterface";
+import type { UserFieldErrors } from "../../../interfaces/UserInterface";
 
 interface AddUserFormModalProps {
   onUserAdded: (message: string) => void;
+  refreshKey: () => void;
   isOpen: boolean;
   onClose: () => void;
 }
 
 const AddUserFormModal: FC<AddUserFormModalProps> = ({
+  onUserAdded,
+  refreshKey,
   isOpen,
   onClose,
-  onUserAdded,
 }) => {
   const [loadingRoles, setLoadingRoles] = useState(false);
   const [roles, setRoles] = useState<RoleColumns[]>([]);
@@ -68,6 +70,8 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({
         setPassword("");
         setPasswordConfirmation("");
         setErrors({});
+
+        handleLoadRoles();
       } else {
         console.error(
           "Unexpected status error occured during adding user: ",
@@ -112,8 +116,10 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({
   };
 
   useEffect(() => {
-    handleLoadRoles();
-  }, []);
+    if (isOpen) {
+      handleLoadRoles();
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -181,15 +187,18 @@ const AddUserFormModal: FC<AddUserFormModalProps> = ({
                   required
                   errors={errors.role}
                 >
-                  <option value="">Select Role</option>
+                  {" "}
                   {loadingRoles ? (
                     <option value="">Loading...</option>
                   ) : (
-                    roles.map((role, index) => (
-                      <option value={role.role_id} key={index}>
-                        {role.role}
-                      </option>
-                    ))
+                    <>
+                      <option value="">Select Role</option>
+                      {roles.map((role, index) => (
+                        <option value={role.role_id} key={index}>
+                          {role.role}
+                        </option>
+                      ))}
+                    </>
                   )}
                 </FloatingLabelSelect>
               </div>

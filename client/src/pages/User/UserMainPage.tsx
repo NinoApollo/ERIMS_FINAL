@@ -1,11 +1,33 @@
 import ToastMessage from "../../components/ToastMessage/ToastMessage";
 import { useModal } from "../../hooks/useModal";
+import { useRefresh } from "../../hooks/useRefresh";
 import { useToastMessage } from "../../hooks/useToastMessage";
 import AddUserFormModal from "./components/AddUserFormModal";
+import DeleteUserFormModal from "./components/DeleteUserFormModal";
+import EditUserFormModal from "./components/EditUserFormModal";
 import UserList from "./components/UserList";
 
 const UserMainPage = () => {
-  const { isOpen, openModal, closeModal } = useModal(false);
+  const {
+    isOpen: isAddUserFormModalOpen,
+    openModal: openAddUserFormModal,
+    closeModal: closeAddUserFormModal,
+  } = useModal(false);
+
+  const {
+    isOpen: isEditFormModalOpen,
+    selectedUser: selectedUserForEdit,
+    openModal: openEditUserFormModal,
+    closeModal: closeEditUserFormModal,
+  } = useModal(false);
+
+  const {
+    isOpen: isDeleteUserFormModalOpen,
+    selectedUser: selectedUserForDelete,
+    openModal: openDeleteUserFormModal,
+    closeModal: closeDeleteUserFormModal,
+  } = useModal(false);
+
   const {
     message: toastMessage,
     isVisible: toastMessageIsVisible,
@@ -13,8 +35,10 @@ const UserMainPage = () => {
     closeToastMessage,
   } = useToastMessage("", false);
 
+  const { refresh, handleRefresh } = useRefresh(false);
+
   return (
-    <div className="space-y-6 px-4 py-5 sm:px-6">
+    <>
       <ToastMessage
         message={toastMessage}
         isVisible={toastMessageIsVisible}
@@ -22,11 +46,32 @@ const UserMainPage = () => {
       />
       <AddUserFormModal
         onUserAdded={showToastMessage}
-        isOpen={isOpen}
-        onClose={closeModal}
+        refreshKey={handleRefresh}
+        isOpen={isAddUserFormModalOpen}
+        onClose={closeAddUserFormModal}
       />
-      <UserList onAddUser={openModal} />
-    </div>
+
+      <EditUserFormModal
+        user={selectedUserForEdit}
+        onUserUpdated={showToastMessage}
+        refreshKey={handleRefresh}
+        isOpen={isEditFormModalOpen}
+        onClose={closeEditUserFormModal}
+      />
+      <DeleteUserFormModal
+        user={selectedUserForDelete}
+        onUserDeleted={showToastMessage}
+        refreshKey={handleRefresh}
+        isOpen={isDeleteUserFormModalOpen}
+        onClose={closeDeleteUserFormModal}
+      />
+      <UserList
+        onAddUser={openAddUserFormModal}
+        onEditUser={(user) => openEditUserFormModal(user)}
+        onDeleteUser={(user) => openDeleteUserFormModal(user)}
+        refreshKey={refresh}
+      />
+    </>
   );
 };
 
