@@ -19,7 +19,7 @@ const RoleMainPage = () => {
   const { refresh, handleRefresh } = useRefresh(false);
 
   useEffect(() => {
-    document.title = "User Management Page";
+    document.title = "Role Main Page";
   }, []);
 
   useEffect(() => {

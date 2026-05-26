@@ -64,9 +64,9 @@ const AddRoleForm: FC<AddRoleFormProps> = ({ onRoleAdded, refreshKey }) => {
         </div>
         <div className="flex justify-end pt-3 border-t border-emerald-100">
           <SubmitButton
-            label="Save Role"
+            label="Add Role"
             loading={loadingStore}
-            loadingLabel="Saving Role..."
+            loadingLabel="Adding Role..."
           />
         </div>
       </form>

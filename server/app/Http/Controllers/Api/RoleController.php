@@ -30,4 +30,37 @@ class RoleController extends Controller
             'message' => 'Role Successfully Saved.'
         ], 200);
     }
+
+    public function getRole($roleId) {
+        $role = Role::find($roleId);
+
+        return response()->json([
+            'role' => $role
+        ], 200);
+    }
+
+    public function updateRole(Request $request, Role $role) {
+        $validated = $request->validate([
+            'role' => ['required', 'min:3', 'max:30']
+        ]);
+
+        $role->update([
+                'role' => $validated['role']
+        ]);
+
+        return response()->json([
+            'role' => $role,
+            'message' => 'Role Successfully Updated'
+        ], 200);
+    }
+
+     public function destroyRole(Role $role) {
+        $role->update([
+            'is_deleted' => true
+        ]);
+
+        return response()->json([
+            'message' => 'Role Successfully Deleted.'
+        ], 200);
+    }
 }
