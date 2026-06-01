@@ -168,7 +168,7 @@ const EditUserFormModal: FC<EditUserFormModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} showCloseButton>
         <form onSubmit={handleUpdateUser}>
-          <h1 className="text-2xl border-b border-gray-100 p-4 font-semibold mb-4">
+          <h1 className="text-2xl border-b border-[#c9a84c]/20 pb-4 font-semibold mb-4 text-white">
             Edit User Form
           </h1>
           <div className="mb-4">
@@ -182,7 +182,7 @@ const EditUserFormModal: FC<EditUserFormModalProps> = ({
               errors={errors.edit_user_profile_picture}
             />
           </div>
-          <div className="grid grid-cols-2 gap-4 border-b border-gray-100 mb-4">
+          <div className="grid grid-cols-2 gap-4 border-b border-[#c9a84c]/20 mb-4">
             <div className="col-span-2 md:col-span-1">
               <div className="mb-4">
                 <FloatingLabelInput

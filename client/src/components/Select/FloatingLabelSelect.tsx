@@ -33,10 +33,9 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
 }) => {
   const hasError = errors && errors.length > 0;
   const borderColor = hasError
-    ? "border-rose-400 focus:border-rose-500"
-    : "border-emerald-200 focus:border-emerald-500";
-  const labelColor = hasError ? "text-rose-500" : "text-emerald-600";
-  const bgColor = "bg-white";
+    ? "border-[#c9a84c]/60 focus:border-[#c9a84c]"
+    : "border-[#1C2B5E] focus:border-[#c9a84c]/60 hover:border-[#c9a84c]/30";
+  const labelColor = hasError ? "text-[#c9a84c]" : "text-[#c9a84c]/70";
 
   return (
     <>
@@ -49,16 +48,17 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
           autoFocus={autoFocus}
           disabled={disabled}
           className={`
-          w-full px-4 pb-2.5 pt-5 
-          text-sm text-emerald-900 
-          ${bgColor} rounded-xl 
-          border-2 transition-all duration-200 
-          appearance-none cursor-pointer
-          peer
-          ${borderColor}
-          ${disabled && "bg-emerald-50 opacity-60 cursor-not-allowed"}
-          ${newSelectClassName || selectClassName || ""}
-        `}
+            w-full px-4 pb-2.5 pt-5
+            text-sm text-white
+            bg-[#0E1A3A] rounded-xl
+            border-2 transition-all duration-200
+            appearance-none cursor-pointer
+            focus:outline-none focus:ring-2 focus:ring-[#c9a84c]/20
+            peer
+            ${borderColor}
+            ${disabled ? "opacity-50 cursor-not-allowed" : ""}
+            ${newSelectClassName || selectClassName || ""}
+          `}
         >
           {children}
         </select>
@@ -66,30 +66,30 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
         <label
           htmlFor={name}
           className={`
-          absolute text-sm duration-300 transform 
-          -translate-y-3 scale-75 top-2 z-10 
-          origin-left left-3 px-1 
-          ${bgColor} rounded
-          transition-all
-          peer-placeholder-shown:scale-100 
-          peer-placeholder-shown:-translate-y-1/2 
-          peer-placeholder-shown:top-1/2
-          peer-focus:top-2 
-          peer-focus:scale-75 
-          peer-focus:-translate-y-3
-          ${labelColor}
-          ${disabled && "text-emerald-300"}
-          ${newLabelClassName || labelClassName || ""}
-        `}
+            absolute text-sm duration-300 transform
+            -translate-y-3 scale-75 top-2 z-10
+            origin-left left-3 px-1
+            bg-[#0E1A3A] rounded
+            transition-all
+            peer-placeholder-shown:scale-100
+            peer-placeholder-shown:-translate-y-1/2
+            peer-placeholder-shown:top-1/2
+            peer-focus:top-2
+            peer-focus:scale-75
+            peer-focus:-translate-y-3
+            ${labelColor}
+            ${disabled ? "text-[#c9a84c]/30" : ""}
+            ${newLabelClassName || labelClassName || ""}
+          `}
         >
           {label}
-          {required && <span className="text-rose-400 ml-0.5">*</span>}
+          {required && <span className="text-[#c9a84c] ml-0.5">*</span>}
         </label>
 
         {/* Dropdown arrow icon */}
         <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
           <svg
-            className={`w-4 h-4 transition-transform ${hasError ? "text-rose-400" : "text-emerald-400"}`}
+            className={`w-4 h-4 transition-transform ${hasError ? "text-[#c9a84c]" : "text-[#c9a84c]/50"}`}
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -104,7 +104,7 @@ const FloatingLabelSelect: FC<FloatingLabelSelectProps> = ({
         </div>
       </div>
       {errors && errors.length > 0 && (
-        <span className="text-rose-500 text-xs mt-1 ml-1"> {errors[0]} </span>
+        <span className="text-[#c9a84c] text-xs mt-1 ml-1">{errors[0]}</span>
       )}
     </>
   );

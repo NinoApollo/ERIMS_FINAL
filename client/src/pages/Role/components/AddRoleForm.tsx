@@ -48,7 +48,7 @@ const AddRoleForm: FC<AddRoleFormProps> = ({ onRoleAdded, refreshKey }) => {
     <>
       <form
         onSubmit={handleStoreRole}
-        className="rounded-3xl border border-emerald-200/60 bg-white/95 p-6 shadow-xl shadow-emerald-500/10"
+        className="rounded-xl border border-[#c9a84c]/20 bg-[#1C2B5E] p-6 shadow-xl shadow-black/30"
       >
         <div className="mb-4">
           <FloatingLabelInput
@@ -62,7 +62,7 @@ const AddRoleForm: FC<AddRoleFormProps> = ({ onRoleAdded, refreshKey }) => {
             errors={errors.role}
           />
         </div>
-        <div className="flex justify-end pt-3 border-t border-emerald-100">
+        <div className="flex justify-end pt-3 border-t border-[#c9a84c]/20">
           <SubmitButton
             label="Add Role"
             loading={loadingStore}

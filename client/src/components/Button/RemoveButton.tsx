@@ -20,7 +20,7 @@ const RemoveButton: FC<RemoveButtonProps> = ({
         className={
           newClassName
             ? newClassName
-            : `px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium cursor-pointer rounded-lg shadow-lg ${className}`
+            : `px-4 py-3 bg-[#6B1E3C] hover:bg-[#7d2347] text-white text-sm font-medium cursor-pointer rounded-lg shadow-lg shadow-[#6B1E3C]/30 border border-[#c9a84c]/20 hover:border-[#c9a84c]/40 transition-all duration-200 ${className}`
         }
         onClick={onRemove}
       >

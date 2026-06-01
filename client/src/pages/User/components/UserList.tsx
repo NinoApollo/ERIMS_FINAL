@@ -136,14 +136,14 @@ const UserList: FC<UserListProps> = ({
 
   return (
     <>
-      <div className="overflow-hidden rounded-lg border border-gray-200 bg-white shadow-lg">
+      <div className="relative overflow-hidden rounded-xl border border-[#c9a84c]/20 bg-[#1C2B5E] shadow-2xl">
         <div
           ref={tableRef}
-          className="relative max-w-full max-h-[calc(100vh-8.5rem)] overflow-x-auto"
+          className="relative max-w-full max-h-[calc(100vh-8.5rem)] overflow-x-auto [-ms-overflow-style:none]"
         >
           <Table>
             <caption className=" mb-4 ">
-              <div className="p-4 flex justify-between border-b border-gray-100">
+              <div className="p-4 flex justify-between border-b border-[#c9a84c]/20 bg-[#1C2B5E]">
                 <div className="w-64">
                   <FloatingLabelInput
                     label="Search"
@@ -156,14 +156,14 @@ const UserList: FC<UserListProps> = ({
                 </div>
                 <button
                   type="button"
-                  className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-lg transition cursor-pointer"
+                  className="px-4 py-2 bg-[#c9a84c] hover:bg-[#b8963e] text-[#1C2B5E] font-semibold rounded-lg shadow-lg shadow-[#c9a84c]/20 border border-[#c9a84c]/40 transition cursor-pointer text-sm tracking-wide"
                   onClick={onAddUser}
                 >
                   Add User
                 </button>
               </div>
             </caption>
-            <TableHeader className="border-b border-gray-200 bg-blue-600 sticky top-0 text-white text-xs z-10">
+            <TableHeader className="border-b border-[#c9a84c]/30 bg-[#6B1E3C] sticky top-0 text-[#c9a84c] text-xs z-10 uppercase tracking-widest">
               <TableRow>
                 <TableCell
                   isHeader
@@ -204,10 +204,13 @@ const UserList: FC<UserListProps> = ({
                 </TableCell>
               </TableRow>
             </TableHeader>
-            <TableBody className="divide-y divide-gray-100 text-gray-500 text-sm">
+            <TableBody className="divide-y divide-white/6 text-slate-300 text-sm bg-[#1C2B5E]">
               {(users.length ?? 0 > 0) ? (
                 users.map((user, index) => (
-                  <TableRow className="hover:bg-gray-100" key={index}>
+                  <TableRow
+                    className="hover:bg-[#6B1E3C]/20 transition-colors duration-150"
+                    key={index}
+                  >
                     <TableCell className="px-4 py-3 text-center">
                       {index + 1}
                     </TableCell>
@@ -219,8 +222,8 @@ const UserList: FC<UserListProps> = ({
                           className="object-cover w-10 h-10 rounded-full"
                         />
                       ) : (
-                        <div className="relative inline-flex items-center justify-center w-10 h-10 text-center text-sm overflow-hidden bg-gray-300 rounded-full">
-                          <span className="font-medium text-gray-600">
+                        <div className="relative inline-flex items-center justify-center w-10 h-10 text-center text-sm overflow-hidden bg-[#c9a84c]/15 border border-[#c9a84c]/30 rounded-full">
+                          <span className="font-semibold text-[#c9a84c]">
                             {`${user.last_name.charAt(0)}${user.first_name.charAt(0)}`}
                           </span>
                         </div>
@@ -242,14 +245,14 @@ const UserList: FC<UserListProps> = ({
                       <div className="flex gap-4">
                         <button
                           type="button"
-                          className="text-green-600 font-medium cursor-pointer hover:underline"
+                          className="text-[#c9a84c] font-medium cursor-pointer hover:text-[#e8c96a] hover:underline transition-colors"
                           onClick={() => onEditUser(user)}
                         >
                           Edit
                         </button>
                         <button
                           type="button"
-                          className="text-red-600 font-medium cursor-pointer hover:underline"
+                          className="text-red-400 font-medium cursor-pointer hover:text-red-300 hover:underline transition-colors"
                           onClick={() => onDeleteUser(user)}
                         >
                           Delete
@@ -262,7 +265,7 @@ const UserList: FC<UserListProps> = ({
                 <TableRow>
                   <TableCell
                     colSpan={7}
-                    className="px-4 py-3 text-center font-medium"
+                    className="px-4 py-8 text-center font-medium text-slate-500"
                   >
                     No Records Found
                   </TableCell>

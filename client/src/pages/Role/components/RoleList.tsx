@@ -48,10 +48,10 @@ const RoleList: FC<RoleListProps> = ({ refreshKey }) => {
 
   return (
     <>
-      <div className="overflow-hidden rounded-3xl border border-emerald-200/60 bg-white/95 shadow-xl shadow-emerald-500/10">
+      <div className="overflow-hidden rounded-xl border border-[#c9a84c]/20 bg-[#1C2B5E] shadow-xl shadow-black/30">
         <div className="max-w-full max-h-[calc(100vh-20rem)] overflow-x-auto">
           <Table>
-            <TableHeader className="border-b border-emerald-100 bg-emerald-950 sticky top-0 text-white text-xs">
+            <TableHeader className="border-b border-[#c9a84c]/30 bg-[#6B1E3C] sticky top-0 text-[#c9a84c] text-xs uppercase tracking-widest">
               <TableCell isHeader className="px-5 py-3 font-medium text-center">
                 No.
               </TableCell>
@@ -62,7 +62,7 @@ const RoleList: FC<RoleListProps> = ({ refreshKey }) => {
                 Actions
               </TableCell>
             </TableHeader>
-            <TableBody className="divide-y divide-emerald-100 text-emerald-600 text-sm">
+            <TableBody className="divide-y divide-white/6 text-slate-300 text-sm bg-[#1C2B5E]">
               {loadingRoles ? (
                 <TableRow>
                   <TableCell colSpan={3} className="px-4 py-3 text-center">
@@ -71,24 +71,27 @@ const RoleList: FC<RoleListProps> = ({ refreshKey }) => {
                 </TableRow>
               ) : (
                 roles.map((role, index) => (
-                  <TableRow className="hover:bg-emerald-50" key={index}>
-                    <TableCell className="px-4 py-3 text-center text-emerald-700">
+                  <TableRow
+                    className="hover:bg-[#6B1E3C]/20 transition-colors duration-150"
+                    key={index}
+                  >
+                    <TableCell className="px-4 py-3 text-center text-slate-400">
                       {index + 1}
                     </TableCell>
-                    <TableCell className="px-4 py-3 text-start text-emerald-800">
+                    <TableCell className="px-4 py-3 text-start text-white font-medium">
                       {role.role}
                     </TableCell>
                     <TableCell className="px-4 py-3 text-center">
                       <div className="flex justify-start items-center gap-4">
                         <Link
                           to={`/role/edit/${role.role_id}`}
-                          className="text-green-600 font-medium hover:underline"
+                          className="text-[#c9a84c] font-medium hover:text-[#e8c96a] hover:underline transition-colors"
                         >
                           Edit
                         </Link>
                         <Link
                           to={`/role/delete/${role.role_id}`}
-                          className="text-red-600 font-medium hover:underline"
+                          className="text-red-400 font-medium hover:text-red-300 hover:underline transition-colors"
                         >
                           Delete
                         </Link>

@@ -31,6 +31,11 @@ return new class extends Migration
                 ->on('tbl_roles')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->enum('status', [
+                'active',
+                'inactive'
+            ])->default('active');
         });
     }
 

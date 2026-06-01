@@ -18,7 +18,7 @@ const BackButton: FC<BackButtonProps> = ({
     <>
       <Link
         to={path}
-        className={`${newClassName ? newClassName : `px-4 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-600 hover:text-emerald-700 text-sm font-medium cursor-pointer rounded-lg shadow-lg ${className}`}`}
+        className={`${newClassName ? newClassName : `px-4 py-3 bg-[#1C2B5E] hover:bg-[#243470] text-[#c9a84c] hover:text-[#d4b563] text-sm font-medium cursor-pointer rounded-lg shadow-lg border border-[#c9a84c]/20 hover:border-[#c9a84c]/50 transition-all duration-200 ${className}`}`}
       >
         {label}
       </Link>

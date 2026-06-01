@@ -27,14 +27,13 @@ const Modal: FC<ModalProps> = ({
   };
 
   const contentClasses = isFullScreen
-    ? "relative w-full h-full rounded-lg bg-white flex flex-col"
-    : "relative w-full sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-lg bg-white max-h-[90vh] flex flex-col";
+    ? "relative w-full h-full rounded-xl bg-[#1C2B5E] border border-[#c9a84c]/20 flex flex-col shadow-2xl"
+    : "relative w-full sm:max-w-md md:max-w-lg lg:max-w-2xl rounded-xl bg-[#1C2B5E] border border-[#c9a84c]/20 max-h-[90vh] flex flex-col shadow-2xl shadow-black/50";
 
   useEffect(() => {
     if (isOpen) {
       document.addEventListener("keydown", handleEscape);
     }
-
     return () => {
       document.removeEventListener("keydown", handleEscape);
     };
@@ -46,7 +45,6 @@ const Modal: FC<ModalProps> = ({
     } else {
       document.body.style.overflow = "unset";
     }
-
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -58,7 +56,7 @@ const Modal: FC<ModalProps> = ({
     <>
       <div className="fixed inset-0 flex items-center justify-center overflow-y-auto modal z-99999 p-4">
         {!isFullScreen && (
-          <div className="fixed inset-0 w-full h-full bg-gray-400/50 backdrop-blur-lg" />
+          <div className="fixed inset-0 w-full h-full bg-[#0E1A3A]/80 backdrop-blur-sm" />
         )}
         <div
           ref={modalRef}
@@ -66,10 +64,13 @@ const Modal: FC<ModalProps> = ({
           onClick={(e) => e.stopPropagation()}
         >
           {showCloseButton && <ModalCloseButton onClose={onClose} />}
-          <div className="flex-1 overflow-y-auto p-4">{children}</div>
+          <div className="flex-1 overflow-y-auto p-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            {children}
+          </div>
         </div>
       </div>
     </>
   );
 };
+
 export default Modal;

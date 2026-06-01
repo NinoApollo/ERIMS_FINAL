@@ -28,7 +28,6 @@ const UploadInput: FC<UploadInputProps> = ({
       if (acceptedFiles && acceptedFiles.length > 0) {
         const file = acceptedFiles[0];
         setPreview(URL.createObjectURL(file));
-
         if (onChange) onChange(file);
       }
     },
@@ -37,7 +36,7 @@ const UploadInput: FC<UploadInputProps> = ({
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: { "image/png": [], "image/jpg": [], "img:jpeg": [] },
+    accept: { "image/png": [], "image/jpg": [], "image/jpeg": [] },
     multiple: false,
   });
 
@@ -54,16 +53,21 @@ const UploadInput: FC<UploadInputProps> = ({
   return (
     <>
       <div className="mb-1">
-        <label htmlFor={name} className="text-blue-600">
+        <label htmlFor={name} className="text-[#c9a84c] text-sm font-medium">
           {label}
         </label>
       </div>
       <div
-        className={`transition border-gray-300 border-dashed cursor-pointer rounded-lg hover:border-blue-900 ${errors ? "mb-0" : "mb-4"}`}
+        className={`transition border-dashed cursor-pointer rounded-xl ${errors ? "mb-0" : "mb-4"}`}
       >
         <div
           {...getRootProps()}
-          className={`rounded-lg border border-dashed border-gray-300 p-7 lg:p-10 ${isDragActive ? "border-blue bg-gray-100 " : "border-gray-300 bg-gray-50"}`}
+          className={`rounded-xl border-2 border-dashed p-7 lg:p-10 transition-all duration-200
+            ${
+              isDragActive
+                ? "border-[#c9a84c] bg-[#c9a84c]/10"
+                : "border-[#c9a84c]/20 bg-[#0E1A3A] hover:border-[#c9a84c]/40 hover:bg-[#c9a84c]/5"
+            }`}
         >
           <input {...getInputProps()} name={name} id={name} />
           <div className="flex flex-col items-center m-0">
@@ -71,12 +75,12 @@ const UploadInput: FC<UploadInputProps> = ({
               <img
                 src={preview}
                 alt="Profile Picture Preview"
-                className="object-cover rounded-full w-[185px] h-[185px]"
+                className="object-cover rounded-full w-[185px] h-[185px] border-2 border-[#c9a84c]/40 shadow-lg"
               />
             ) : (
               <>
                 <div className="mb-[22px] flex justify-center">
-                  <div className="flex w-[68px] h-[68px] items-center justify-center rounded-full bg-gray-200 text-gray-600">
+                  <div className="flex w-[68px] h-[68px] items-center justify-center rounded-full bg-[#1C2B5E] border border-[#c9a84c]/30 text-[#c9a84c]/70 shadow-md">
                     <svg
                       className="fill-current"
                       width="29"
@@ -85,20 +89,20 @@ const UploadInput: FC<UploadInputProps> = ({
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
+                        fillRule="evenodd"
+                        clipRule="evenodd"
                         d="M14.5019 3.91699C14.2852 3.91699 14.0899 4.00891 13.953 4.15589L8.57363 9.53186C8.28065 9.82466 8.2805 10.2995 8.5733 10.5925C8.8661 10.8855 9.34097 10.8857 9.63396 10.5929L13.7519 6.47752V18.667C13.7519 19.0812 14.0877 19.417 14.5019 19.417C14.9161 19.417 15.2519 19.0812 15.2519 18.667V6.48234L19.3653 10.5929C19.6583 10.8857 20.1332 10.8855 20.426 10.5925C20.7188 10.2995 20.7186 9.82463 20.4256 9.53184L15.0838 4.19378C14.9463 4.02488 14.7367 3.91699 14.5019 3.91699ZM5.91686 18.667C5.91626 18.2528 5.58047 17.917 5.16626 17.917C4.75205 17.917 4.41626 18.2528 4.41626 18.667V21.8337C4.41626 23.0763 5.42362 24.0837 6.66626 24.0837H22.3339C23.5766 24.0837 24.5839 23.0763 24.5839 21.8337V18.667C23.0839 22.2479 22.7482 22.5837 22.3339 22.5837H6.66626C6.25205 22.5837 5.91626 22.2479 5.91626 21.8337V18.667Z"
-                      ></path>
+                      />
                     </svg>
                   </div>
                 </div>
-                <h4 className="mb-4 font-semibold text-gray-800 text-xl">
+                <h4 className="mb-4 font-semibold text-white text-xl">
                   {isDragActive ? "Drop File Here" : "Drag & Drop File Here"}
                 </h4>
-                <span className="text-center mb-4 block w-full max-w-[290px] text-sm text-gray-700">
+                <span className="text-center mb-4 block w-full max-w-[290px] text-sm text-slate-400">
                   Drag and drop your PNG, JPG or JPEG
                 </span>
-                <span className="font-medium underline text-blue-600 text-sm">
+                <span className="font-medium underline text-[#c9a84c] text-sm hover:text-[#d4b563] transition-colors duration-200">
                   Browse File
                 </span>
               </>
@@ -108,7 +112,7 @@ const UploadInput: FC<UploadInputProps> = ({
       </div>
       {errors && errors.length > 0 && (
         <div className="mb-2">
-          <span className="text-red-600 text-xs">{errors[0]}</span>
+          <span className="text-[#c9a84c] text-xs">{errors[0]}</span>
         </div>
       )}
       {preview && (

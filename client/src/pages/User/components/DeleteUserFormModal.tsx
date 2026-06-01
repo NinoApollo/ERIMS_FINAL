@@ -80,76 +80,75 @@ const DeleteUserFormModal: FC<DeleteUserFormModalProps> = ({
     <>
       <Modal isOpen={isOpen} onClose={onClose} showCloseButton>
         <form onSubmit={handleDestroyUser}>
-          <h1 className="text-2xl border-b border-gray-100 p-4 font-semibold mb-4">
+          <h1 className="text-2xl border-b border-[#c9a84c]/20 pb-4 font-semibold mb-4 text-white">
             Delete User Form
           </h1>
-          <div className="grid grid-cols-2 gap-4 border-b border-gray-100 mb-4">
+          <div className="grid grid-cols-2 gap-4 border-b border-[#c9a84c]/20 mb-4">
             <div className="col-span-2 md:col-span-1">
               <div className="mb-4">
                 <label
                   htmlFor="first_name"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   First Name
                 </label>
-                <p className="text-gray-500 font-medium">{firstName}</p>
+                <p className="text-white font-medium">{firstName}</p>
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="middle_name"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   Middle Name
                 </label>
-                <p className="text-gray-500 font-medium">
-                  {middleName || "N/A"}
-                </p>
+                <p className="text-white font-medium">{middleName || "N/A"}</p>
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="last_name"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   Last Name
                 </label>
-                <p className="text-gray-500 font-medium">{lastName}</p>
+                <p className="text-white font-medium">{lastName}</p>
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="suffix_name"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   Suffix Name
                 </label>
-                <p className="text-gray-500 font-medium">
-                  {suffixName || "N/A"}
-                </p>
+                <p className="text-white font-medium">{suffixName || "N/A"}</p>
               </div>
               <div className="mb-4">
-                <label htmlFor="role" className="text-black font-medium mb-2">
+                <label
+                  htmlFor="role"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
+                >
                   Role
                 </label>
-                <p className="text-gray-500 font-medium">{role}</p>
+                <p className="text-white font-medium">{role}</p>
               </div>
             </div>
             <div className="col-span-2 md:col-span-1">
               <div className="mb-4">
                 <label
                   htmlFor="birth_date"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   Birth Date
                 </label>
-                <p className="text-gray-500 font-medium">{birthDate}</p>
+                <p className="text-white font-medium">{birthDate}</p>
               </div>
               <div className="mb-4">
                 <label
                   htmlFor="username"
-                  className="text-black font-medium mb-2"
+                  className="text-[#c9a84c]/70 text-xs uppercase tracking-widest font-semibold mb-1 block"
                 >
                   Username
                 </label>
-                <p className="text-gray-500 font-medium">{username}</p>
+                <p className="text-white font-medium">{username}</p>
               </div>
             </div>
           </div>

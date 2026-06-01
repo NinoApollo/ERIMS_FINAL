@@ -56,11 +56,11 @@ const AppHeader = () => {
     <>
       {isOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm transition-all duration-300"
+          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm transition-all duration-300"
           onClick={toggleUserMenu}
         />
       )}
-      <nav className="fixed top-0 z-50 w-full bg-white/95 backdrop-blur-md shadow-lg border-b border-emerald-200">
+      <nav className="fixed top-0 z-50 w-full bg-[#1C2B5E] shadow-xl border-b-2 border-[#6B1E3C]">
         <div className="px-4 py-3 lg:px-6 lg:pl-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end gap-3">
@@ -70,7 +70,7 @@ const AppHeader = () => {
                 aria-controls="top-bar-sidebar"
                 type="button"
                 onClick={toggleSidebar}
-                className="sm:hidden text-emerald-700 bg-white rounded-lg shadow-md border border-emerald-200 hover:bg-emerald-600 hover:text-white hover:border-emerald-600 focus:ring-4 focus:ring-emerald-300 font-medium leading-5 text-sm p-2.5 transition-all duration-200 focus:outline-none"
+                className="sm:hidden text-[#c9a84c] bg-[#0E1A3A] rounded-lg border border-[#c9a84c]/40 hover:bg-[#c9a84c] hover:text-[#1C2B5E] hover:border-[#c9a84c] focus:ring-2 focus:ring-[#c9a84c]/50 font-medium leading-5 text-sm p-2.5 transition-all duration-200 focus:outline-none"
               >
                 <span className="sr-only">Open sidebar</span>
                 <svg
@@ -90,13 +90,20 @@ const AppHeader = () => {
                   />
                 </svg>
               </button>
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 text-2xl rounded-lg flex items-center justify-center">
-                  ♻️
+              <div className="flex items-center gap-3">
+                <img
+                  src="src/assets/img/ChtmLogo.png"
+                  alt="FCU-CHTM Logo"
+                  className="w-9 h-9 object-contain rounded"
+                />
+                <div className="flex flex-col">
+                  <span className="hidden md:block text-[10px] font-semibold tracking-[0.2em] text-[#c9a84c]/70 uppercase leading-none mb-0.5">
+                    FCU-CHTM
+                  </span>
+                  <span className="self-center text-sm font-bold tracking-wide text-white md:text-base leading-tight">
+                    EQUIPMENT & LABORATORY RESOURCE MANAGEMENT SYSTEM
+                  </span>
                 </div>
-                <span className="self-center text-base font-bold tracking-wide text-emerald-800 md:text-lg">
-                  FCU - PLASTIC RECYCLING VENDING MACHINE
-                </span>
               </div>
             </div>
             <div className="flex items-center">
@@ -105,41 +112,47 @@ const AppHeader = () => {
                   <button
                     type="button"
                     onClick={toggleUserMenu}
-                    className="flex text-sm bg-linear-to-r from-emerald-600 to-emerald-700 rounded-full ring-2 ring-emerald-200 hover:ring-emerald-400 focus:ring-4 focus:ring-emerald-300 transition-all duration-200 shadow-md hover:shadow-lg"
+                    className="flex text-sm rounded-full ring-2 ring-[#c9a84c]/40 hover:ring-[#c9a84c] focus:ring-4 focus:ring-[#c9a84c]/30 transition-all duration-200 shadow-md hover:shadow-[#c9a84c]/20 hover:shadow-lg"
                     aria-expanded="false"
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span className="sr-only">Open user menu</span>
                     <img
-                      className="w-9 h-9 rounded-full border-2 border-white"
+                      className="w-9 h-9 rounded-full border-2 border-[#c9a84c]/60"
                       src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
                       alt="user photo"
                     />
                   </button>
                 </div>
                 <div
-                  className={`absolute right-6 top-12 min-w-55 z-50 ${isOpen ? "block animate-fadeIn" : "hidden"} bg-white rounded-xl shadow-2xl border border-emerald-100 overflow-hidden`}
+                  className={`absolute right-6 top-14 min-w-56 z-50 ${isOpen ? "block animate-fadeIn" : "hidden"} bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden`}
                   id="dropdown-user"
                 >
                   <div
-                    className="px-5 py-4 bg-linear-to-r from-emerald-50 to-emerald-100 border-b border-emerald-200"
+                    className="px-5 py-4 bg-[#6B1E3C] border-b border-[#c9a84c]/30"
                     role="none"
                   >
                     <p
-                      className="text-sm font-semibold text-emerald-800"
+                      className="text-xs font-semibold tracking-widest text-[#c9a84c]/70 uppercase mb-0.5"
+                      role="none"
+                    >
+                      Signed in as
+                    </p>
+                    <p
+                      className="text-sm font-bold text-white truncate"
                       role="none"
                     >
                       {handleUserFullNameFormat()}
                     </p>
                   </div>
                   <ul
-                    className="py-2 text-sm text-emerald-700 font-medium"
+                    className="py-2 text-sm text-slate-700 font-medium"
                     role="none"
                   >
                     <li>
                       <button
                         type="submit"
-                        className="flex items-center gap-2 w-full text-start px-5 py-2.5 hover:bg-emerald-50 hover:text-emerald-700 transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed"
+                        className="flex items-center gap-2.5 w-full text-start px-5 py-2.5 text-slate-600 hover:bg-red-50 hover:text-red-700 transition-colors duration-150 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50"
                         role="menuitem"
                         onClick={handleLogout}
                         disabled={isLoading}

@@ -24,7 +24,7 @@ const Spinner: FC<SpinnerProps> = ({ size }) => {
     >
       <svg
         aria-hidden="true"
-        className={`${sizeClass} animate-spin text-emerald-600 fill-emerald-200`}
+        className={`${sizeClass} animate-spin text-[#c9a84c]/30 fill-[#c9a84c]`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

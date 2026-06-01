@@ -87,7 +87,7 @@ const DeleteRoleForm = () => {
       ) : (
         <form
           onSubmit={handleDestroyRole}
-          className="rounded-3xl border border-emerald-200/60 bg-white/95 p-6 shadow-xl shadow-emerald-500/10"
+          className="rounded-xl border border-[#c9a84c]/20 bg-[#1C2B5E] p-6 shadow-xl shadow-black/30"
         >
           <div className="mb-4">
             <FloatingLabelInput
@@ -98,7 +98,7 @@ const DeleteRoleForm = () => {
               readonly
             />
           </div>
-          <div className="flex justify-end gap-4 pt-3 border-t border-emerald-100">
+          <div className="flex justify-end gap-4 pt-3 border-t border-[#c9a84c]/20">
             {!loadingDestroy && <BackButton label="Back" path="/roles" />}
             <SubmitButton
               label="Delete Role"
