@@ -75,7 +75,7 @@ const UploadInput: FC<UploadInputProps> = ({
               <img
                 src={preview}
                 alt="Profile Picture Preview"
-                className="object-cover rounded-full w-[185px] h-[185px] border-2 border-[#c9a84c]/40 shadow-lg"
+                className="object-cover rounded-full w-46.25 h-46.25 border-2 border-[#c9a84c]/40 shadow-lg"
               />
             ) : (
               <>

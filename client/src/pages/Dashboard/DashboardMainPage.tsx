@@ -7,51 +7,48 @@ const DashboardMainPage = () => {
 
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-[#c9a84c]/20 bg-[#1C2B5E] p-6 shadow-xl shadow-black/30">
-        <div className="mb-5">
-          <p className="text-xs uppercase tracking-[0.35em] text-[#c9a84c]/70">
-            Overview
-          </p>
-          <h1 className="mt-3 text-3xl font-semibold text-white">
-            Website Summary
-          </h1>
-          <p className="mt-2 text-sm text-slate-400 max-w-2xl">
-            This dashboard gives a quick summary of the website status and
-            points you to user and role management.
+      <div className="rounded-lg border border-white/10 bg-slate-900 p-6 shadow-lg">
+        <div className="mb-6 flex flex-col gap-2 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">
+              Overview
+            </p>
+            <h1 className="mt-2 text-2xl font-semibold text-white">
+              Dashboard
+            </h1>
+          </div>
+          <p className="text-sm text-slate-400 max-w-2xl">
+            Monitor request activity, inventory records, and account management
+            from one clean workspace.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
-          <div className="rounded-xl border border-[#c9a84c]/20 bg-[#6B1E3C]/20 p-5">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#c9a84c]">
-              Users
-            </p>
-            <p className="mt-3 text-3xl font-semibold text-white">
-              Manage access
+          <div className="rounded-lg border border-white/10 bg-slate-800 p-5">
+            <p className="text-sm font-medium text-slate-300">Accounts</p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              Students and personnel
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              Add, edit, and remove users from the account system.
+              Maintain user details, roles, departments, and profile records.
             </p>
           </div>
-          <div className="rounded-xl border border-[#c9a84c]/20 bg-[#6B1E3C]/20 p-5">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#c9a84c]">
-              Roles
-            </p>
-            <p className="mt-3 text-3xl font-semibold text-white">
-              Control permissions
+          <div className="rounded-lg border border-white/10 bg-slate-800 p-5">
+            <p className="text-sm font-medium text-slate-300">Inventory</p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              Equipment and areas
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              Create and manage role types used across the website.
+              Keep equipment quantities, locations, categories, and status in
+              sync.
             </p>
           </div>
-          <div className="rounded-xl border border-[#c9a84c]/20 bg-[#6B1E3C]/20 p-5">
-            <p className="text-xs uppercase tracking-[0.35em] text-[#c9a84c]">
-              Summary
-            </p>
-            <p className="mt-3 text-3xl font-semibold text-white">
-              Fast overview
+          <div className="rounded-lg border border-white/10 bg-slate-800 p-5">
+            <p className="text-sm font-medium text-slate-300">Requests</p>
+            <p className="mt-2 text-2xl font-semibold text-white">
+              Forms and monitoring
             </p>
             <p className="mt-2 text-sm text-slate-400">
-              Navigate the sidebar to reach the correct area for any admin task.
+              Review equipment requests and audit important account activity.
             </p>
           </div>
         </div>

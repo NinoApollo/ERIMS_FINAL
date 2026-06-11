@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom";
 import AppLayout from "../layout/AppLayout";
-import UserMainPage from "../pages/User/UserMainPage";
 import RoleMainPage from "../pages/Role/RoleMainPage";
 import EditRolePage from "../pages/Role/EditRolePage";
 import DeleteRolePage from "../pages/Role/DeleteRolePage";
@@ -15,6 +14,13 @@ import CategoryMainPage from "../pages/Category/CategoryMainPage";
 import EditCategoryPage from "../pages/Category/EditCategoryPage";
 import DeleteCategoryPage from "../pages/Category/DeleteCategoryPage";
 import LaboratoryMainPage from "../pages/Laboratory/LaboratoryMainPage";
+import EquipmentMainPage from "../pages/Equipment/EquipmentMainPage";
+import AreaMainPage from "../pages/Area/AreaMainPage";
+import GenderMainPage from "../pages/Gender/GenderMainPage";
+import RequestFormMainPage from "../pages/RequestForm/RequestFormMainPage";
+import StudentMainPage from "../pages/Student/StudentMainPage";
+import PersonnelMainPage from "../pages/Personnel/PersonnelMainPage";
+import ActivityLogMainPage from "../pages/ActivityLog/ActivityLogMainPage";
 
 const AppRoutes = () => {
   return (
@@ -51,8 +57,14 @@ const AppRoutes = () => {
               path="/category/delete/:category_id"
               element={<DeleteCategoryPage />}
             />
-            <Route path="/users" element={<UserMainPage />} />
+            <Route path="/genders" element={<GenderMainPage />} />
+            <Route path="/students" element={<StudentMainPage />} />
+            <Route path="/personnels" element={<PersonnelMainPage />} />
             <Route path="/laboratories" element={<LaboratoryMainPage />} />
+            <Route path="/areas" element={<AreaMainPage />} />
+            <Route path="/equipments" element={<EquipmentMainPage />} />
+            <Route path="/request-form" element={<RequestFormMainPage />} />
+            <Route path="/activity-logs" element={<ActivityLogMainPage />} />
           </Route>
         </Routes>
       </AuthProvider>

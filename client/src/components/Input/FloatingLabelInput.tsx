@@ -3,7 +3,7 @@ import { useState } from "react";
 
 interface FloatingLabelInputProps {
   label: string;
-  type: "text" | "date" | "password";
+  type: "text" | "date" | "password" | "time" | "number" | "email" | "tel";
   name: string;
   value?: string | any;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -17,6 +17,10 @@ interface FloatingLabelInputProps {
   readonly?: boolean;
   errors?: string[];
   showPasswordToggle?: boolean;
+  min?: number | string;
+  max?: number | string;
+  step?: number | string;
+  placeholder?: string;
 }
 
 const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
@@ -35,6 +39,10 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
   readonly,
   errors,
   showPasswordToggle = true,
+  min,
+  max,
+  step,
+  placeholder,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
 
@@ -65,6 +73,10 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
           name={name}
           value={value}
           onChange={onChange}
+          min={min}
+          max={max}
+          step={step}
+          placeholder={placeholder || " "}
           className={`${
             newInputClassName
               ? newInputClassName
@@ -78,7 +90,6 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
                 ${shouldShowEyeIcon ? "pr-10" : ""}
                 ${inputClassName}`
           }`}
-          placeholder=" "
           autoFocus={autoFocus}
           disabled={disabled}
           readOnly={readonly}
@@ -91,7 +102,7 @@ const FloatingLabelInput: FC<FloatingLabelInputProps> = ({
               ? newLabelClassName
               : `absolute text-sm duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-left bg-[#0E1A3A] px-2 rounded-lg
                 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2
-                peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1
+                peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto inset-s-1
                 ${hasError ? "text-[#c9a84c] peer-focus:text-[#c9a84c]" : "text-[#c9a84c]/70 peer-focus:text-[#c9a84c]"}
                 ${labelClassName}`
           }`}

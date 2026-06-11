@@ -13,7 +13,7 @@ const LayoutContent = () => {
       <div>
         <AppHeader />
       </div>
-      <div className="pt-20 pl-0 sm:pl-72 bg-[#0E1A3A] h-screen overflow-hidden transition-all duration-300">
+      <div className="pt-20 pl-0 sm:pl-72 bg-slate-950 h-screen overflow-hidden transition-all duration-300">
         <div className="p-6 md:p-8 h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
           <Outlet />
         </div>

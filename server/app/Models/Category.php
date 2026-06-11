@@ -1,4 +1,5 @@
 <?php
+// app/Models/Category.php
 
 namespace App\Models;
 
@@ -13,8 +14,14 @@ class Category extends Model
 
     protected $table = 'tbl_categories';
     protected $primaryKey = 'category_id';
+
     protected $fillable = [
         'category',
         'is_deleted',
     ];
+
+    public function equipments(): HasMany
+    {
+        return $this->hasMany(Equipment::class, 'category_id', 'category_id');
+    }
 }

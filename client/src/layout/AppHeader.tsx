@@ -46,6 +46,11 @@ const AppHeader = () => {
     return fullName;
   };
 
+  const userInitials = () => {
+    if (!user) return "";
+    return `${user.user.first_name?.charAt(0) || ""}${user.user.last_name?.charAt(0) || ""}`.toUpperCase();
+  };
+
   useEffect(() => {
     if (user) {
       handleUserFullNameFormat();
@@ -60,7 +65,7 @@ const AppHeader = () => {
           onClick={toggleUserMenu}
         />
       )}
-      <nav className="fixed top-0 z-50 w-full bg-[#1C2B5E] shadow-xl border-b-2 border-[#6B1E3C]">
+      <nav className="fixed top-0 z-50 w-full bg-[#111827] border-b border-white/10">
         <div className="px-4 py-3 lg:px-6 lg:pl-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center justify-start rtl:justify-end gap-3">
@@ -70,7 +75,7 @@ const AppHeader = () => {
                 aria-controls="top-bar-sidebar"
                 type="button"
                 onClick={toggleSidebar}
-                className="sm:hidden text-[#c9a84c] bg-[#0E1A3A] rounded-lg border border-[#c9a84c]/40 hover:bg-[#c9a84c] hover:text-[#1C2B5E] hover:border-[#c9a84c] focus:ring-2 focus:ring-[#c9a84c]/50 font-medium leading-5 text-sm p-2.5 transition-all duration-200 focus:outline-none"
+                className="sm:hidden text-slate-200 rounded-lg border border-white/10 hover:bg-white/10 focus:ring-2 focus:ring-white/20 font-medium leading-5 text-sm p-2.5 transition-all duration-200 focus:outline-none"
               >
                 <span className="sr-only">Open sidebar</span>
                 <svg
@@ -97,11 +102,11 @@ const AppHeader = () => {
                   className="w-9 h-9 object-contain rounded"
                 />
                 <div className="flex flex-col">
-                  <span className="hidden md:block text-[10px] font-semibold tracking-[0.2em] text-[#c9a84c]/70 uppercase leading-none mb-0.5">
+                  <span className="hidden md:block text-[10px] font-semibold tracking-[0.2em] text-slate-400 uppercase leading-none mb-0.5">
                     FCU-CHTM
                   </span>
                   <span className="self-center text-sm font-bold tracking-wide text-white md:text-base leading-tight">
-                    EQUIPMENT & LABORATORY RESOURCE MANAGEMENT SYSTEM
+                    Equipment and Laboratory Resource Management
                   </span>
                 </div>
               </div>
@@ -112,28 +117,34 @@ const AppHeader = () => {
                   <button
                     type="button"
                     onClick={toggleUserMenu}
-                    className="flex text-sm rounded-full ring-2 ring-[#c9a84c]/40 hover:ring-[#c9a84c] focus:ring-4 focus:ring-[#c9a84c]/30 transition-all duration-200 shadow-md hover:shadow-[#c9a84c]/20 hover:shadow-lg"
+                    className="flex text-sm rounded-full ring-2 ring-white/20 hover:ring-white/40 focus:ring-4 focus:ring-white/20 transition-all duration-200"
                     aria-expanded="false"
                     data-dropdown-toggle="dropdown-user"
                   >
                     <span className="sr-only">Open user menu</span>
-                    <img
-                      className="w-9 h-9 rounded-full border-2 border-[#c9a84c]/60"
-                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                      alt="user photo"
-                    />
+                    {user?.user.profile_picture ? (
+                      <img
+                        className="w-9 h-9 rounded-full object-cover border border-white/20"
+                        src={user.user.profile_picture}
+                        alt={handleUserFullNameFormat()}
+                      />
+                    ) : (
+                      <span className="inline-flex w-9 h-9 items-center justify-center rounded-full bg-slate-700 text-xs font-semibold text-white border border-white/20">
+                        {userInitials()}
+                      </span>
+                    )}
                   </button>
                 </div>
                 <div
-                  className={`absolute right-6 top-14 min-w-56 z-50 ${isOpen ? "block animate-fadeIn" : "hidden"} bg-white rounded-xl shadow-2xl border border-slate-200 overflow-hidden`}
+                  className={`absolute right-6 top-14 min-w-56 z-50 ${isOpen ? "block animate-fadeIn" : "hidden"} bg-white rounded-lg shadow-xl border border-slate-200 overflow-hidden`}
                   id="dropdown-user"
                 >
                   <div
-                    className="px-5 py-4 bg-[#6B1E3C] border-b border-[#c9a84c]/30"
+                    className="px-5 py-4 bg-slate-900 border-b border-slate-200"
                     role="none"
                   >
                     <p
-                      className="text-xs font-semibold tracking-widest text-[#c9a84c]/70 uppercase mb-0.5"
+                      className="text-xs font-semibold tracking-widest text-slate-400 uppercase mb-0.5"
                       role="none"
                     >
                       Signed in as

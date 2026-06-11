@@ -1,10 +1,11 @@
 <?php
+// app/Models/Laboratory.php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 class Laboratory extends Model
@@ -13,13 +14,19 @@ class Laboratory extends Model
 
     protected $table = 'tbl_laboratories';
     protected $primaryKey = 'laboratory_id';
+
     protected $fillable = [
         'laboratory',
-        'course_id',
         'is_deleted',
     ];
 
-    public function course(): BelongsTo {
-        return $this->belongsTo(Course::class, 'course_id', 'course_id');
+    public function requestForms(): HasMany
+    {
+        return $this->hasMany(RequestForm::class, 'laboratory_id', 'laboratory_id');
+    }
+
+    public function equipments(): HasMany
+    {
+        return $this->hasMany(Equipment::class, 'area_id', 'area_id');
     }
 }

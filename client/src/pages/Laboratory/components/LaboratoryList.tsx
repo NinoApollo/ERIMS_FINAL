@@ -105,7 +105,7 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
       <div className="overflow-hidden rounded-2xl border border-[#c9a84c]/20 bg-[#1C2B5E] shadow-xl shadow-black/30">
         <div
           ref={tableRef}
-          className="max-w-full max-h-[calc(100vh-20rem)] overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+          className="max-w-full max-h-[calc(100vh-20rem)] overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] scrollbar-none"
         >
           <Table>
             <TableHeader className="border-b border-[#c9a84c]/20 bg-[#0E1A3A] sticky top-0 text-xs">
@@ -126,12 +126,6 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
                   isHeader
                   className="px-5 py-3 font-semibold text-start text-[#c9a84c]/70 uppercase tracking-wider"
                 >
-                  Course
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-semibold text-start text-[#c9a84c]/70 uppercase tracking-wider"
-                >
                   Actions
                 </TableCell>
               </TableRow>
@@ -139,7 +133,7 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
             <TableBody className="divide-y divide-[#c9a84c]/10 text-sm">
               {loadingLaboratories && laboratories.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={4} className="px-4 py-6 text-center">
+                  <TableCell colSpan={3} className="px-4 py-6 text-center">
                     <Spinner size="md" />
                   </TableCell>
                 </TableRow>
@@ -155,9 +149,6 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
                       </TableCell>
                       <TableCell className="px-4 py-3 text-start text-slate-200">
                         {laboratory.laboratory}
-                      </TableCell>
-                      <TableCell className="px-4 py-3 text-start text-slate-300">
-                        {laboratory.course.course}
                       </TableCell>
                       <TableCell className="px-4 py-3">
                         <div className="flex justify-start items-center gap-4">
@@ -181,7 +172,7 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
                   ))}
                   {loadingLaboratories && (
                     <TableRow>
-                      <TableCell colSpan={4} className="px-4 py-3 text-center">
+                      <TableCell colSpan={3} className="px-4 py-3 text-center">
                         <Spinner size="md" />
                       </TableCell>
                     </TableRow>
@@ -190,7 +181,7 @@ const LaboratoryList: FC<LaboratoryListProps> = ({
               ) : (
                 <TableRow>
                   <TableCell
-                    colSpan={4}
+                    colSpan={3}
                     className="px-4 py-8 text-center font-medium text-slate-500"
                   >
                     No Records Found

@@ -9,8 +9,7 @@ use Illuminate\Http\Request;
 class LaboratoryController extends Controller
 {
     public function loadLaboratories() {
-        $laboratories = Laboratory::with('course')
-            ->where('is_deleted', false)
+        $laboratories = Laboratory::where('tbl_laboratories.is_deleted', false)
             ->get();
 
         return response()->json([
@@ -20,23 +19,20 @@ class LaboratoryController extends Controller
 
     public function storeLaboratory(Request $request) {
         $validated = $request->validate([
-            'laboratory' => ['required', 'min:3', 'max:20'],
-            'course_id' => ['required', 'exists:tbl_courses,course_id'],
+            'laboratory' => ['required', 'min:3', 'max:30']
         ]);
 
-        $laboratory = Laboratory::create([
-            'laboratory' => $validated['laboratory'],
-            'course_id' => $validated['course_id'],
+        Laboratory::create([
+            'laboratory' => $validated['laboratory']
         ]);
 
         return response()->json([
-            'message' => 'Laboratory Successfully Saved.',
-            'laboratory' => $laboratory->load('course')
+            'message' => 'Laboratory Successfully Saved.'
         ], 200);
     }
 
     public function getLaboratory($laboratoryId) {
-        $laboratory = Laboratory::with('course')->find($laboratoryId);
+        $laboratory = Laboratory::find($laboratoryId);
 
         return response()->json([
             'laboratory' => $laboratory
@@ -45,22 +41,20 @@ class LaboratoryController extends Controller
 
     public function updateLaboratory(Request $request, Laboratory $laboratory) {
         $validated = $request->validate([
-            'laboratory' => ['required', 'min:3', 'max:20'],
-            'course_id' => ['required', 'exists:tbl_courses,course_id'],
+            'laboratory' => ['required', 'min:3', 'max:30']
         ]);
 
         $laboratory->update([
-            'laboratory' => $validated['laboratory'],
-            'course_id' => $validated['course_id'],
+                'laboratory' => $validated['laboratory']
         ]);
 
         return response()->json([
-            'laboratory' => $laboratory->load('course'),
+            'laboratory' => $laboratory,
             'message' => 'Laboratory Successfully Updated'
         ], 200);
     }
 
-    public function destroyLaboratory(Laboratory $laboratory) {
+     public function destroyLaboratory(Laboratory $laboratory) {
         $laboratory->update([
             'is_deleted' => true
         ]);

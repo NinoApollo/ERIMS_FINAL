@@ -18,7 +18,11 @@ class Role extends Model
         'is_deleted',
     ];
 
-    public function users(): HasMany {
-        return $this->hasMany(User::class, 'role_id', 'role_id');
+    public function students(): HasMany {
+        return $this->hasMany(Student::class, 'role_id', 'role_id');
+    }
+
+    public function personnel(): HasMany {
+        return $this->hasMany(Personnel::class, 'role_id', 'role_id');
     }
 }

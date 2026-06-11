@@ -22,7 +22,6 @@ const DeleteLaboratoryFormModal: FC<DeleteLaboratoryFormModalProps> = ({
 }) => {
   const [loadingDestroy, setLoadingDestroy] = useState(false);
   const [laboratoryName, setLaboratoryName] = useState("");
-  const [courseName, setCourseName] = useState("");
 
   const handleDestroyLaboratory = async (e: FormEvent) => {
     try {
@@ -58,7 +57,6 @@ const DeleteLaboratoryFormModal: FC<DeleteLaboratoryFormModalProps> = ({
     if (isOpen) {
       if (laboratory) {
         setLaboratoryName(laboratory.laboratory);
-        setCourseName(laboratory.course.course);
       } else {
         console.error(
           "Unexpected laboratory error occurred during getting laboratory details: ",
@@ -84,15 +82,6 @@ const DeleteLaboratoryFormModal: FC<DeleteLaboratoryFormModalProps> = ({
                 Laboratory
               </label>
               <p className="text-slate-200 font-medium">{laboratoryName}</p>
-            </div>
-            <div className="mb-4">
-              <label
-                htmlFor="course"
-                className="text-[#c9a84c]/70 text-xs font-semibold tracking-wider uppercase block mb-1"
-              >
-                Course
-              </label>
-              <p className="text-slate-200 font-medium">{courseName}</p>
             </div>
           </div>
           <div className="flex justify-end gap-2">

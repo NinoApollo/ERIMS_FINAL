@@ -1,208 +1,88 @@
-import { useCallback, useEffect, useRef, useState, type FC } from "react";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHeader,
-  TableRow,
-} from "../../../components/Table";
-import LaboratoryService from "../../../services/LaboratoryService";
-import Spinner from "../../../components/Spinner/Spinner";
-import type { LaboratoryColumns } from "../../../interfaces/LaboratoryInterface";
+import { useState, type FC, type FormEvent } from "react";
+import SubmitButton from "../../../components/Button/SubmitButton";
+import FloatingLabelInput from "../../../components/Input/FloatingLabelInput";
+import type { LoginCredentialsErrorFields } from "../../../interfaces/AuthInterface";
+import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
-interface LaboratoryListProps {
-  onEditLaboratory: (laboratory: LaboratoryColumns | null) => void;
-  onDeleteLaboratory: (laboratory: LaboratoryColumns | null) => void;
-  refreshKey: boolean;
+interface LoginFormProps {
+  message: (message: string, isFailed: boolean) => void;
 }
 
-const LaboratoryList: FC<LaboratoryListProps> = ({
-  onEditLaboratory,
-  onDeleteLaboratory,
-  refreshKey,
-}) => {
-  const [loadingLaboratories, setLoadingLaboratories] = useState(false);
-  const [laboratories, setLaboratories] = useState<LaboratoryColumns[]>([]);
-  const [laboratoriesTableCurrentPage, setLaboratoriesTableCurrentPage] =
-    useState(1);
-  const [laboratoriesTableLastPage, setLaboratoriesTableLastPage] = useState(1);
-  const [hasMore, setHasMore] = useState(true);
+const LoginForm: FC<LoginFormProps> = ({ message }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errors, setErrors] = useState<LoginCredentialsErrorFields>({});
 
-  const tableRef = useRef<HTMLDivElement>(null);
+  const { login } = useAuth();
+  const navigate = useNavigate();
 
-  const handleLoadLaboratories = async (page: number, append = false) => {
+  const handleLogin = async (e: FormEvent) => {
     try {
-      setLoadingLaboratories(true);
+      e.preventDefault();
 
-      const res = await LaboratoryService.loadLaboratories(page, "");
+      setIsLoading(true);
 
-      if (res.status === 200) {
-        const laboratoriesData =
-          res.data.laboratories.data || res.data.laboratories || [];
-        const lastPage =
-          res.data.laboratories.last_page ||
-          res.data.last_page ||
-          laboratoriesTableLastPage ||
-          1;
-
-        setLaboratories(
-          append ? [...laboratories, ...laboratoriesData] : laboratoriesData,
-        );
-        setLaboratoriesTableCurrentPage(page);
-        setLaboratoriesTableLastPage(lastPage);
-        setHasMore(page < lastPage);
+      await login(username, password);
+      navigate("/dashboard");
+    } catch (error: any) {
+      if (error.response && error.response.status === 401) {
+        setErrors({});
+        message(error.response.data.message, true);
+      } else if (error.response && error.response.status === 422) {
+        setErrors(error.response.data.errors);
       } else {
-        setLaboratories(append ? laboratories : []);
-        setHasMore(false);
+        console.error(
+          "Unexpected server error occured during logging user in: ",
+          error,
+        );
       }
-    } catch (error) {
-      console.error(
-        "Unexpected server error occurred during loading laboratories: ",
-        error,
-      );
     } finally {
-      setLoadingLaboratories(false);
+      setIsLoading(false);
     }
   };
 
-  const handleScroll = useCallback(() => {
-    const ref = tableRef.current;
-
-    if (
-      ref &&
-      ref.scrollTop + ref.clientHeight >= ref.scrollHeight - 10 &&
-      hasMore &&
-      !loadingLaboratories
-    ) {
-      handleLoadLaboratories(laboratoriesTableCurrentPage + 1, true);
-    }
-  }, [hasMore, loadingLaboratories, laboratoriesTableCurrentPage]);
-
-  useEffect(() => {
-    const ref = tableRef.current;
-
-    if (ref) {
-      ref.addEventListener("scroll", handleScroll);
-    }
-
-    return () => {
-      if (ref) {
-        ref.removeEventListener("scroll", handleScroll);
-      }
-    };
-  }, [handleScroll]);
-
-  useEffect(() => {
-    setLaboratories([]);
-    setLaboratoriesTableCurrentPage(1);
-    setHasMore(true);
-
-    handleLoadLaboratories(1, false);
-  }, [refreshKey]);
-
   return (
     <>
-      <div className="overflow-hidden rounded-2xl border border-[#c9a84c]/20 bg-[#1C2B5E] shadow-xl shadow-black/30">
-        <div
-          ref={tableRef}
-          className="max-w-full max-h-[calc(100vh-20rem)] overflow-x-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
-        >
-          <Table>
-            <TableHeader className="border-b border-[#c9a84c]/20 bg-[#0E1A3A] sticky top-0 text-xs">
-              <TableRow>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-semibold text-center text-[#c9a84c]/70 uppercase tracking-wider"
-                >
-                  No.
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-semibold text-start text-[#c9a84c]/70 uppercase tracking-wider"
-                >
-                  Laboratory
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-semibold text-start text-[#c9a84c]/70 uppercase tracking-wider"
-                >
-                  Course
-                </TableCell>
-                <TableCell
-                  isHeader
-                  className="px-5 py-3 font-semibold text-start text-[#c9a84c]/70 uppercase tracking-wider"
-                >
-                  Actions
-                </TableCell>
-              </TableRow>
-            </TableHeader>
-            <TableBody className="divide-y divide-[#c9a84c]/10 text-sm">
-              {loadingLaboratories && laboratories.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={4} className="px-4 py-6 text-center">
-                    <Spinner size="md" />
-                  </TableCell>
-                </TableRow>
-              ) : laboratories.length > 0 ? (
-                <>
-                  {laboratories.map((laboratory, index) => (
-                    <TableRow
-                      className="hover:bg-[#c9a84c]/5 transition-colors duration-150"
-                      key={laboratory.laboratory_id}
-                    >
-                      <TableCell className="px-4 py-3 text-center text-slate-400">
-                        {index + 1}
-                      </TableCell>
-                      <TableCell className="px-4 py-3 text-start text-slate-200">
-                        {laboratory.laboratory}
-                      </TableCell>
-                      <TableCell className="px-4 py-3 text-start text-slate-300">
-                        {laboratory.course.course}
-                      </TableCell>
-                      <TableCell className="px-4 py-3">
-                        <div className="flex justify-start items-center gap-4">
-                          <button
-                            type="button"
-                            className="text-[#c9a84c] font-medium cursor-pointer hover:text-[#e8c96a] hover:underline transition-colors"
-                            onClick={() => onEditLaboratory(laboratory)}
-                          >
-                            Edit
-                          </button>
-                          <button
-                            type="button"
-                            className="text-red-400 font-medium cursor-pointer hover:text-red-300 hover:underline transition-colors"
-                            onClick={() => onDeleteLaboratory(laboratory)}
-                          >
-                            Delete
-                          </button>
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                  {loadingLaboratories && (
-                    <TableRow>
-                      <TableCell colSpan={4} className="px-4 py-3 text-center">
-                        <Spinner size="md" />
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </>
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={4}
-                    className="px-4 py-8 text-center font-medium text-slate-500"
-                  >
-                    No Records Found
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
+      <form onSubmit={handleLogin}>
+        <div className="mb-4">
+          <FloatingLabelInput
+            label="Username"
+            type="text"
+            name="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            autoFocus
+            errors={errors.username}
+          />
         </div>
+        <div className="mb-6">
+          <FloatingLabelInput
+            label="Password"
+            type="password"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+            errors={errors.password}
+          />
+        </div>
+        <SubmitButton
+          className="w-full bg-[#c9a84c] hover:bg-[#b8963e] text-[#1C2B5E] font-semibold text-center shadow-lg shadow-[#c9a84c]/20 border border-[#c9a84c]/40 transition-all duration-200"
+          label="Sign In"
+          loading={isLoading}
+          loadingLabel="Signing In..."
+        />
+      </form>
+      <div className="mt-6 text-center">
+        <p className="text-xs text-slate-500">
+          © 2024 FCU-CHTM. All rights reserved.
+        </p>
       </div>
     </>
   );
 };
 
-export default LaboratoryList;
+export default LoginForm;

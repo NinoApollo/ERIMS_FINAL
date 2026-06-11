@@ -54,7 +54,7 @@ const AddRoleForm: FC<AddRoleFormProps> = ({ onRoleAdded, refreshKey }) => {
           <FloatingLabelInput
             label="Role"
             type="text"
-            name="gender"
+            name="role"
             value={role}
             onChange={(e) => setRole(e.target.value)}
             required

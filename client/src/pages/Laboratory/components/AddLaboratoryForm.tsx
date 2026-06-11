@@ -1,11 +1,8 @@
-import { useEffect, useState, type FC, type FormEvent } from "react";
+import { useState, type FC, type FormEvent } from "react";
 import SubmitButton from "../../../components/Button/SubmitButton";
 import FloatingLabelInput from "../../../components/Input/FloatingLabelInput";
-import FloatingLabelSelect from "../../../components/Select/FloatingLabelSelect";
 import type { LaboratoryFieldErrors } from "../../../interfaces/LaboratoryInterface";
-import type { CourseColumns } from "../../../interfaces/CourseInterface";
 import LaboratoryService from "../../../services/LaboratoryService";
-import CourseService from "../../../services/CourseService";
 
 interface AddLaboratoryFormProps {
   onLaboratoryAdded: (message: string) => void;
@@ -17,35 +14,10 @@ const AddLaboratoryForm: FC<AddLaboratoryFormProps> = ({
   refreshKey,
 }) => {
   const [loadingStore, setLoadingStore] = useState(false);
-  const [loadingCourses, setLoadingCourses] = useState(false);
-  const [courses, setCourses] = useState<CourseColumns[]>([]);
   const [laboratory, setLaboratory] = useState("");
-  const [courseId, setCourseId] = useState("");
   const [errors, setErrors] = useState<LaboratoryFieldErrors>({
     laboratory: [],
   });
-
-  const handleLoadCourses = async () => {
-    try {
-      setLoadingCourses(true);
-      const res = await CourseService.loadCourses();
-      if (res.status === 200) {
-        setCourses(res.data.courses);
-      } else {
-        console.error(
-          "Unexpected status error occurred during loading courses: ",
-          res.status,
-        );
-      }
-    } catch (error) {
-      console.error(
-        "Unexpected server error occurred during loading courses: ",
-        error,
-      );
-    } finally {
-      setLoadingCourses(false);
-    }
-  };
 
   const handleStoreLaboratory = async (e: FormEvent) => {
     try {
@@ -55,12 +27,10 @@ const AddLaboratoryForm: FC<AddLaboratoryFormProps> = ({
 
       const res = await LaboratoryService.storeLaboratory({
         laboratory,
-        course_id: courseId,
       });
 
       if (res.status === 200) {
         setLaboratory("");
-        setCourseId("");
         setErrors({ laboratory: [] });
         onLaboratoryAdded(res.data.message);
         refreshKey();
@@ -84,10 +54,6 @@ const AddLaboratoryForm: FC<AddLaboratoryFormProps> = ({
     }
   };
 
-  useEffect(() => {
-    handleLoadCourses();
-  }, []);
-
   return (
     <>
       <form
@@ -105,29 +71,6 @@ const AddLaboratoryForm: FC<AddLaboratoryFormProps> = ({
             autoFocus
             errors={errors.laboratory}
           />
-        </div>
-        <div className="mb-4">
-          <FloatingLabelSelect
-            label="Course"
-            name="course_id"
-            value={courseId}
-            onChange={(e) => setCourseId(e.target.value)}
-            required
-            errors={errors.course_id}
-          >
-            {loadingCourses ? (
-              <option value="">Loading...</option>
-            ) : (
-              <>
-                <option value="">Select Course</option>
-                {courses.map((course, index) => (
-                  <option value={course.course_id} key={index}>
-                    {course.course}
-                  </option>
-                ))}
-              </>
-            )}
-          </FloatingLabelSelect>
         </div>
         <div className="flex justify-end pt-3 border-t border-[#c9a84c]/20">
           <SubmitButton
