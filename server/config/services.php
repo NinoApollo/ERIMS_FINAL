@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'n8n' => [
+        'request_form_webhook_url' => env('N8N_WEBHOOK_URL'),
+    ],
+
 ];

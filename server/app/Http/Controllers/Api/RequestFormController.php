@@ -11,7 +11,10 @@ use App\Models\ActivityLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Throwable;
 
 class RequestFormController extends Controller
 {
@@ -109,7 +112,6 @@ class RequestFormController extends Controller
                 'items.*.remarks' => ['nullable', 'string'],
             ]);
 
-            // Verify requestor exists
             $requestor = null;
             if ($validated['requestor_type'] === 'student') {
                 $requestor = Student::find($validated['requestor_id']);
@@ -173,6 +175,8 @@ class RequestFormController extends Controller
             DB::commit();
 
             $requestForm->load(['laboratory', 'area', 'course', 'requestor']);
+
+            $this->sendRequestFormWebhook($requestForm);
 
             return response()->json([
                 'success' => true,
@@ -381,9 +385,119 @@ class RequestFormController extends Controller
         return "RF-{$year}-{$nextNumber}";
     }
 
+    private function sendRequestFormWebhook(RequestForm $requestForm): void
+    {
+        $webhookUrl = config('services.n8n.request_form_webhook_url');
+
+        if (!$webhookUrl) {
+            return;
+        }
+
+        try {
+            $response = Http::timeout(10)
+                ->acceptJson()
+                ->asJson()
+                ->post($webhookUrl, $this->buildRequestFormWebhookPayload($requestForm));
+
+            if ($response->failed()) {
+                Log::warning('n8n request form webhook failed.', [
+                    'request_id' => $requestForm->request_id,
+                    'request_number' => $requestForm->request_number,
+                    'status' => $response->status(),
+                    'body' => $response->body(),
+                ]);
+            }
+        } catch (Throwable $e) {
+            Log::warning('n8n request form webhook could not be reached.', [
+                'request_id' => $requestForm->request_id,
+                'request_number' => $requestForm->request_number,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }
+
+    private function buildRequestFormWebhookPayload(RequestForm $requestForm): array
+    {
+        $items = $requestForm->items->map(fn ($item) => [
+            'equipment_id' => $item->equipment_id,
+            'equipment_code' => $item->equipment_code,
+            'equipment_name' => $item->equipment_name,
+            'quantity' => $item->quantity,
+            'unit' => $item->unit,
+            'remarks' => $item->remarks,
+        ])->values()->toArray();
+
+        $requestor = $requestForm->requestor;
+        $requestorName = $requestor
+            ? trim(collect([
+                $requestor->first_name ?? null,
+                $requestor->middle_name ?? null,
+                $requestor->last_name ?? null,
+                $requestor->suffix_name ?? null,
+            ])->filter()->implode(' '))
+            : null;
+
+        $spreadsheetRow = [
+            'Request Number' => $requestForm->request_number,
+            'Requestor ID' => $requestForm->requestor_id,
+            'Requestor Type' => ucfirst($requestForm->requestor_type),
+            'Requestor Name' => $requestorName,
+            'Username' => $requestor?->username,
+            'Laboratory' => $requestForm->laboratory?->laboratory,
+            'Area' => $requestForm->area?->area,
+            'Course' => $requestForm->course?->course,
+            'Subject' => $requestForm->subject,
+            'Purpose' => $requestForm->purpose,
+            'Request Type' => ucfirst($requestForm->request_type),
+            'Request Date' => $requestForm->request_date?->format('Y-m-d'),
+            'Date of Use' => $requestForm->date_of_use?->format('Y-m-d'),
+            'Time of Use' => $requestForm->time_of_use,
+            'Expected Return Date' => $requestForm->expected_return_date?->format('Y-m-d'),
+            'Status' => ucfirst($requestForm->status),
+            'Items' => collect($items)
+                ->map(fn ($item) => "{$item['equipment_name']} ({$item['quantity']} {$item['unit']})")
+                ->implode(', '),
+            'Remarks' => $requestForm->remarks,
+            'Created At' => $requestForm->created_at?->toIso8601String(),
+        ];
+
+        return [
+            'event' => 'request_form.created',
+            'source' => config('app.name'),
+            'sent_at' => now()->toIso8601String(),
+            'request_form' => [
+                'request_id' => $requestForm->request_id,
+                'request_number' => $requestForm->request_number,
+                'request_type' => $requestForm->request_type,
+                'status' => $requestForm->status,
+                'purpose' => $requestForm->purpose,
+                'subject' => $requestForm->subject,
+                'request_date' => $requestForm->request_date?->format('Y-m-d'),
+                'date_of_use' => $requestForm->date_of_use?->format('Y-m-d'),
+                'time_of_use' => $requestForm->time_of_use,
+                'expected_return_date' => $requestForm->expected_return_date?->format('Y-m-d'),
+                'remarks' => $requestForm->remarks,
+                'created_at' => $requestForm->created_at?->toIso8601String(),
+            ],
+            'requestor' => [
+                'id' => $requestForm->requestor_id,
+                'type' => $requestForm->requestor_type,
+                'name' => $requestorName,
+                'username' => $requestor?->username,
+            ],
+            'location' => [
+                'laboratory' => $requestForm->laboratory?->laboratory,
+                'area' => $requestForm->area?->area,
+                'course' => $requestForm->course?->course,
+            ],
+            'items' => $items,
+            'spreadsheet_row' => $spreadsheetRow,
+        ];
+    }
+
     private function recordActivity(Request $request, string $action, string $description, ?int $requestId = null): void
     {
-        $user = $request->user();
+        $user = $request->user('sanctum') ?: $request->user();
 
         ActivityLog::create([
             'student_id' => $user instanceof Student ? $user->student_id : null,

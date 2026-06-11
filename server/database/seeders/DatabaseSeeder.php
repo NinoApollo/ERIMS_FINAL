@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
             ['role' => 'Admin'],
             ['role' => 'Faculty'],
             ['role' => 'Staff'],
+            ['role' => 'Student'],
             ['role' => 'Dean'],
         ]);
 
@@ -34,9 +35,9 @@ class DatabaseSeeder extends Seeder
 
         Course::factory()->createMany([
             ['course' => 'BSCS'],
-            ['course' => 'BSIT'],
-            ['course' => 'BSBA'],
-            ['course' => 'BPED'],
+            ['course' => 'BSTM'],
+            ['course' => 'BSHM - CSO'],
+            ['course' => 'BSHM - HRM'],
         ]);
 
         YearLevel::factory()->createMany([
@@ -48,7 +49,7 @@ class DatabaseSeeder extends Seeder
 
         Department::factory()->createMany([
             ['department' => 'CCS Dept.'],
-            ['department' => 'CBA Dept.'],
+            ['department' => 'CHTM Dept.'],
             ['department' => 'CTE Dept.'],
             ['department' => 'CAS Dept.'],
         ]);
@@ -76,7 +77,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Random personnel
-        Personnel::factory(20)->create();
+        Personnel::factory(50)->create();
 
         // ── Students ──────────────────────────────────────────────────────
         $birthDate = fake()->dateTimeBetween('-22 years', '-17 years')->format('Y-m-d');
@@ -100,6 +101,6 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Random students
-        Student::factory(100)->create();
+        Student::factory(50)->create();
     }
 }

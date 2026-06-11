@@ -11,16 +11,19 @@ use App\Http\Controllers\Api\GenderController;
 use App\Http\Controllers\Api\LaboratoryController;
 use App\Http\Controllers\Api\PersonnelController;
 use App\Http\Controllers\Api\RequestFormController;
-use App\Http\Controllers\Api\RequestFormItemController;
 use App\Http\Controllers\Api\RoleController;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\YearLevelController;
 use Illuminate\Support\Facades\Route;
 
+// Public routes (no auth required)
 Route::controller(AuthController::class)->prefix('/auth')->group(function() {
     Route::post('/login', 'login');
 });
 
+Route::post('/request-form/storeRequestForm', [RequestFormController::class, 'storeRequestForm']);
+
+// Protected routes
 Route::middleware('auth:sanctum')->group(function() {
     Route::controller(AuthController::class)->prefix('/auth')->group(function() {
         Route::get('/me', 'me');
@@ -118,7 +121,6 @@ Route::middleware('auth:sanctum')->group(function() {
     Route::controller(RequestFormController::class)->prefix('/request-form')->group(function() {
         Route::get('/loadRequestForms', 'loadRequestForms');
         Route::get('/getRequestForm/{requestId}', 'getRequestForm');
-        Route::post('/storeRequestForm', 'storeRequestForm');
         Route::put('/updateRequestForm/{requestForm}', 'updateRequestForm');
         Route::put('/updateRequestFormStatus/{requestForm}', 'updateRequestFormStatus');
         Route::put('/destroyRequestForm/{requestForm}', 'destroyRequestForm');

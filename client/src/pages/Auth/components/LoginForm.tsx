@@ -76,11 +76,6 @@ const LoginForm: FC<LoginFormProps> = ({ message }) => {
           loadingLabel="Signing In..."
         />
       </form>
-      <div className="mt-6 text-center">
-        <p className="text-xs text-slate-500">
-          © 2024 FCU-CHTM. All rights reserved.
-        </p>
-      </div>
     </>
   );
 };
